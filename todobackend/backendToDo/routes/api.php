@@ -6,6 +6,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/getdata', [TasksController::class, "GetData"]);
 
 Route::post('/adddata', [TasksController::class, 'AddData']);
-Route::delete('/deletedata/{id}', [TasksController::class, 'deleteData']);
+Route::delete('/deletedata/{id}', [TasksController::class, 'Delete']);
 
-Route::put('/toggletodo/{id}', [TasksController::class, 'ToggleData']);
+Route::patch('/toggletodo/{id}', [TasksController::class, 'ToggleData']);

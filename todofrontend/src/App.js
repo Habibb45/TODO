@@ -28,8 +28,8 @@ export default function App() {
   }
 
   // Toggle todo's completed status
-  async function handleToggleTodo(id, completed) {
-    const updatedTodo = await toggleData(id, completed);
+  async function handleToggleTodo(id) {
+    const updatedTodo = await toggleData(id);
     if (updatedTodo) {
       setTodos((currentTodos) =>
         currentTodos.map((todo) =>
@@ -37,15 +37,14 @@ export default function App() {
         )
       );
     }
+    window.location.reload();
   }
 
   // Delete todo
   async function handleDeleteTodo(id) {
     const success = await deleteData(id);
     if (success) {
-      setTodos((currentTodos) =>
-        currentTodos.filter((todo) => todo.id !== id)
-      );
+      setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
     }
   }
 

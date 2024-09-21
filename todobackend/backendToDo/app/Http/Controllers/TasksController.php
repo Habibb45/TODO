@@ -28,7 +28,7 @@ class TasksController extends Controller
         try {
             $task = Tasks::create([
                 'name' => $request->input('name'),
-                'completed' => false, // Assuming newly created tasks are incomplete by default
+                'iscomplete' => false, // Assuming newly created tasks are incomplete by default
             ]);
 
             return response()->json($task, 201); // Return the created task with a 201 status code
@@ -37,15 +37,17 @@ class TasksController extends Controller
         }
     }
 
-    // Delete a task
-    public function deleteData($id)
+    public function Delete($id)
     {
-        try {
-            $task = Tasks::findOrFail($id); // Find the task by its ID or fail if not found
-            $task->delete(); // Delete the task
-            return response()->json(['message' => 'Task deleted successfully.'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to delete task: ' . $e->getMessage()], 500);
+        // Find the item by ID
+        $item = Tasks::find($id);
+
+        if ($item) {
+            // Delete the item
+            $item->delete();
+            return response()->json(['message' => 'Item deleted successfully'], 200);
+        } else {
+            return response()->json(['message' => 'Item not found'], 404);
         }
     }
 
@@ -55,7 +57,7 @@ class TasksController extends Controller
     {
         try {
             $task = Tasks::findOrFail($id); // Find the task by its ID or fail if not found
-            $task->completed = !$task->completed; // Toggle the completed status
+            $task->iscomplete = !$task->iscomplete; // Toggle the completed status
             $task->save(); // Save the updated task
             return response()->json($task, 200); // Return the updated task
         } catch (\Exception $e) {
